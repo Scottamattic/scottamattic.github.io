@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: Cosmos</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>COSMOS: an x86 Operating System Kernel</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+
+				<li><a href="Project_8_Wormhole.html">Hypervisor Extensions</a></li> &nbsp;
+
+				<li><a href="Project_2_UserSpace.html">Userspace threading library</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<figure>
+			<figcaption><h2>Project Description</h2></figcaption>
+			<p> <span class="COSMOS">COSMOS</span> is an IA32 operating system. 
+				This operating system has some notable missing features including a full elf-loader and a file system. 
+				The testing was done via Simics, a full-system simulator used to run unchanged production binaries of the target hardware at high-performance speeds (Wikipedia). It can also be tested by loading the OS onto a floppy disk and putting it into an old IBM computer with a pentium ii processor.</p>
+
+			<p class="aligncenter">
+			<img src="Project_1/Cosmos.jpg" width=400 alt="This image shows the COSMOS crash output during our first real hardware test. In this test, we are running test cases (as user executables) via a simple shell program that we executed on a boot.">
+			<figcaption><h3>At least it wasn't a triple fault!<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		<ul>
+			<b>The core systems in the kernel can be divided into the following categories:</b> <br>
+			<br>
+			<li>Virtual Memory system<br>
+				– Physical frame manager <br>
+				– Page directory interface <br>
+				– Elf loader <br>
+				– ZFOD support <br>
+				– New pages/ remove pages system calls<br>
+			</li>
+			<br>
+			<li>PCB/TCB system <br>
+				– Process control blocks / thread control blocks<br>
+				– Tcblist – a managed queue of threads (per process)<br>
+				– Process/thread exit and reaping system<br>
+				– Sleep system to reschedule threads for certain time amounts<br>
+			</li>
+			<br>
+			<li>Scheduling/ Context Swapping system <br>
+				– Context switcher<br>
+				– Scheduler (Round Robin)<br>
+			</li>
+			<br>
+			<li>Thread Lifecycle Syscalls <br>
+				– Vanish and wait (wait for a child process to exit, or kill a thread/process)<br>
+				– Set status (set exit status upon a vanish())<br>
+				– Fork and thread fork<br>
+				– Exec (reload a different executable into your virtual address space)<br></li>
+			<br>
+			<li>Console IO and Keyboard Drivers</li>
+			<br>
+			<li>Exception Handlers <br>
+				– x86 exceptions (we either abort kernel or kill thread)<br>
+				– Pagefault handler <br>
+				– Swexn ( can install a software exception handler )<br></li>
+			<br>
+			<li>Locking<br>
+				– Reader/writer locks<br>
+				– Mutex variants<br>
+				– Semaphore variants<br>
+				– Conditional variables<br></li>
+			<br>
+			<li>Hypervisor extensions<br>
+				– Hypercalls<br>
+				– Shadow page tables<br>
+				– Virtual interrups/exceptions<br>
+			<br>
+			<li>Userspace libraries<br>
+				– 1:1 threading library<br>
+			<br>
+		</ul>
+				
+		<ul>
+			Using the GRUB boot loader, my co-conspirator and I started with bootstrapping done and the processor entering an empty kernel_main().
+			The rest was up to us. <br> <br>
+			<b>Kernel init consisted of:</b>
+				<br>
+				<br>
+				<li>Writing a virtual memory library (for allocating and manipulating page directory/table structures). We direct mapped the bottom 16 MB of a process’s virtual address space to the bottom 16 MB of physical memory that contained our kernel.</li>
+				<li>Writing a physical memory manager that allocated and freed physical memory in 4Kb frames. We used this to satisfy process paging needs, and for initial loading of an executable into the process’s virtual memory space.</li>
+				<li>Writing an elf-loader (due to time constraints, we were provided a utility that, provided all user executables, built a single file containing one large character array per executable. We still had to check an ‘elf-like’ header and load in the text, data, rodata, and bss sections).</li>
+				<li>Installing “dummy” system calls and exception handlers into the IDT as interrupt/trap gates.</li>
+				<li>Creating initial PCB/TCB control blocks to store threads and process information.</li>
+				<li>Initializing keyboard and console drivers.</li>
+				<li>Setting up stacks and control registers to support the initial leap to user space, initializing both an idle process and an init process that immediately forked a shell program.</li>
+		</ul>
+		<ul>
+			<b>We then implemented the following system calls:</b> <br>
+				&nbsp;
+				<li>deschedule – block until some event</li>
+				<li>exec – execute a new program</li>
+				<li>fork – create a copy of your process</li>
+				<li>get_ticks – get system time</li>
+				<li>gettid – get your thread id</li>
+				<li>halt – halt the processor or simics</li>
+				<li>make_runnable – make another thread runnable</li>
+				<li>new_pages – request more memory pages for a process’s address space</li>
+				<li>readfile – read from a file</li>
+				<li>remove_pages – remove pages from a process’s address space</li>
+				<li>set_status – set return status for a process</li>
+				<li>sleep – sleep for a certain number of ticks ( thread will not be scheduled )</li>
+				<li>swexn – install a user-defined software exception handler</li>
+				<li>thread_fork – create a new thread</li>
+				<li>vanish – exit a thread and possibly a process</li>
+				<li>wait – reap exit status of a fork-ed child</li>
+				<li>yield – deschedule current thread in favor of another</li>
+				<li>readline – get a line from console input</li>
+				<li>print – output buffer to console</li>
+				<li>set_term_color – set the terminal color</li>
+				<li>set_cursor_pos – set terminal cursor position</li>
+				<li>get_cursor_pos – get terminal cursor position</li>
+		</ul>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>

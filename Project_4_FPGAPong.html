@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: FPGA Pong</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>FPGA Pong</h1>
+		</header>
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<h2>FPGA Pong Project Description</h2>
+		<p>For a final project in my RTL FPGA design course, I created a <span class="Pong">‘Pong’ game</span> on an Altera Test board that communicated with any computer monitor via a custom VGA IP block. 
+			I wrote, in SystemVerilog, hardware descriptions of a datapath 
+			(and controlling FSM) to run both the game and do VGA timing signals at the same time.</p>
+
+		<figure>
+			<figcaption><h3>Project Photos<hr></h3></figcaption>
+			</hr>
+		
+			<div>
+				<p class="aligncenter">
+				<img src="Project_4/FPGA Pong-4.png",alt="This is the Pong output on the monitor via a VGA cable. The ball had an adjustable size and goals were highlighted on a score. The controls were implemented via physical switches and potentiometers on the Altera board."width=80%>
+				<p><i><figcaption>This is the Pong output on the monitor via a VGA cable. The ball had an adjustable size and goals were highlighted on a score. The controls were implemented via physical switches and potentiometers on the Altera board.</figcaption></i></p>
+			</div>
+			<div>
+				<p class="aligncenter">
+				<img src="Project_4/FPGA Pong.png",alt="This is the Altera board with score counts that were implemented via a seven segment display driver in the FPGA."width=80%>
+				<p><i><figcaption>This is the Altera board with score counts that were implemented via a seven segment display driver in the FPGA.</p></figcaption></i>
+			</div>
+		</figure>
+
+		My pong game included: 
+		<ul>
+			<li>VGA compatibility (sorting out the timing sequence to drive screen refresh was a particular issue)</li>
+			<li>Proper edge detection for the ball, paddle, and screen edges</li>
+			<li>Goal detection</li>
+			<li>Seven Segment Display driver (also written in SystemVerilog) to display scores</li>
+			<li>Controls via switches on the Altera board</li>
+			<li>Adjustable ball size</li>
+		</ul>
+	
+		<p>This project was exciting 
+			because most of my other FPGA work is written in a behavioral style, 
+			so it was a nice break to design a retro game system in the RTL style. 
+			This means that the work was written in a more procedural manner, 
+			encouraging simulation and manipulation of data variables. 
+			Also, I felt like Steve Wozniak.
+		</p>
+	</main>
+		<footer>
+			<small><i>Copyright &copy; 2023 Scott Mionis
+		</footer>
+	</div>
+	</figure>
+</body>
+
+</html>

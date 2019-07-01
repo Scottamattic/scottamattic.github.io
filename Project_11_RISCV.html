@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: RISC-V Core</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>SS OOO by technicality, a RISC-V core</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<figure>
+			<figcaption><h2>Project Description</h2></figcaption>
+			<p> This is an RTL implementation of a 2-way superscalar, somewhat out-of-order, 5-stage, RISC-V core. <br><br>
+				Used a BTB for branch prediction, future revisions split this into a BTAC/BHT.
+				Data hazard controllers forwarded values or stalled the pipeline.
+				Fun features included a store buffer.
+				<br><br>
+				The core has limited OOO capability,
+				by which I mean stores are buffered,
+				and instructions can be shuffled in-between the 2 parallel pipelines if there is a data hazard, etc...
+				The top pipe (the U-pipe, to steal P5 terminology) is first in program order,
+				and the bottom pipe (the V-pipe) is second.
+				If there is a data hazard causing the top pipe to stall,
+				I sometimes still allow the V pipe to progress,
+				as long as it can be proven that no conflicts exist.
+				<br><br>
+				More complex considerations about memory consistency would come into play,
+				were this intended to be in a multicore environment.
+				The only functional goal here was single-threaded correctness,
+				which is admittedly a limited goal.
+				<br> <br>
+				I've also implemented various proper SS OOO element like a ROB, IQ, and RAT,
+				and hope to integrate them at some point.
+				<br>
+				While I ambitiously want to implement an entire P6, <br>
+				Or a DEC Alpha, <br>
+				I'd settle for something like a Motorola 68k <br>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_11/single cycle.png" width=800 alt="Core">
+			<figcaption><h3>Single Cycle PoC (ISA subset)<hr></h3></figcaption>
+			</hr>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_11/stall.png" width=800 alt="Core">
+			<figcaption><h3>Version 1 (ISA subset)<hr></h3></figcaption>
+			</hr>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_11/fwd.png" width=800 alt="Core">
+			<figcaption><h3>Version 2 (ISA subset)<hr></h3></figcaption>
+			</hr>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_11/old.png" width=800 alt="Core">
+			<figcaption><h3>Version 3<hr></h3></figcaption>
+			</hr>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_11/Core.png" width=800 alt="Core">
+			<figcaption><h3>Version 4<hr></h3></figcaption>
+			</hr>
+			</p>
+		</figure>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>

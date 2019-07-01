@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: Wavescalar</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>WaveScalar Lite: a C++ dataflow sim environment</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+
+				<li><a href="Project_9_Interligua.html">Interligua: An optimizing C compiler for x86-64</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<figure>
+			<figcaption><h2>Project Description</h2></figcaption>
+			<p> <span class="COSMOS">WaveScalar Lite</span> is an architectural simulator for the academic WaveScalar computer architecture.
+				
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_10/Simulator.png" width=400 alt="Simulator">
+			<figcaption><h3>Simulator<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		I did this with a couple of great folks I worked with at CMU. <br>
+		The goal was to evaluate new scheduling algorithms for dataflow architectures. <br>
+		I modified my Interligua compiler to target the simulator, so we could gather results. <br>
+		<br>
+		We first wanted to evaluate existing spatial scheduling algorithms,
+		and then use insights to devise our own.
+		<br>
+		The LARA algorithm we devised routed producers that are live at the same time (Compiler liveness analysis) on different PEs, 
+		to get as close to the dataflow limit as possible.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_10/LARA.png" width=400 alt="LARA">
+			<figcaption><h3>LARA algorithm for PE scheduling<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		The compiler output was two files, one with the program, and the other with a map of PC to PE assignments.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/WaveScalar.png" width=400 alt="LARA">
+			<figcaption><h3>WaveScalar simulation system architecture<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		The simulator executed the compiler output.
+		PHI instructions (From SSA syntax) were used at basic block boundaries to notate producer/consumer relationships.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_10/Exec.png" width=400 alt="Execution of traces">
+			<figcaption><h3>Execution of traces<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		Results were promising.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_10/Results.png" width=400 alt="Results">
+			<figcaption><h3>Results<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		<figure>
+			<h1>Reports</h1>
+			<h3>LARA</h3>
+			<object data= "Project_10/LARA.pdf" 
+					width="800"
+					height="500">
+			</object>
+		</figure>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>

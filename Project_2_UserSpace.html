@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Scott Mionis Website :: Userspace thread</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>User-space thread library</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="Project_1_Cosmos.html">Back to COSMOS</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<h2>Project Description</h2>
+		<p>This project consisted of developing a <span class="COSMOS">1-to-1 Userspace thread library</span>
+			for extensively testing the functionality of the base COSMOS kernel 
+			(and the WORMHOLE hypervisor extension).</p>
+
+		<p> First I created systemcall "stub routines" for interacting with COSMOS through a functional interface. 
+			One tricky aspect was COSMOS’s thread_fork system call, as it was up to the user to manage and create a new thread stack. 
+		</p>
+		I then implemented: 
+		<ul>
+			<li>A software exception handler via the swexn() COSMOS call to serve a few purposes: <br>
+				1) handle user thread crashes <br>
+				2) extend a thread’s stack space if it exceeds the minimum allotted stack size<br>
+			</li>
+			<li>User-space variants of Mutexes, Conditional Variables, Semaphores, and Reader/Writer Locks.</li>
+			<li>Thread management calls (init, create, exit, join, yield, and get_id)</li>
+		</ul>
+		The thread management calls implemented are as follows:
+		<ul>
+			<li>thr_init() – initialized the thread library</li>
+			<li>thr_create( ) – This function created a new thread to run a given function with a  given argument. This function allocated a stack for the new user thread and then invoked the thread fork system call to create a new kernel thread.</li>
+			<li>thr_join() – This function cleans up the resources from a thread and returns the exit status</li>
+			<li>thr_exit() – This function exits the thread with a given exit status. It frees as much as it can but keeps the exit status around for another thread to collect via a join() call.</li>
+			<li>thr_getid() – Returns the thread ID of the currently running thread.</li>
+			<li>thr_yield() – Defers execution of the invoking thread in favor of a different thread.</li>
+		</ul>
+			We ran user applications with this threading library on both COSMOS and WORMHOLE to test system calls, scheduling, and kernel thread management. <br><br>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+	</div>
+</body>
+
+</html>

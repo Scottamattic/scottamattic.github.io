@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: Web Proxy Server</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>Web Proxy Server</h1>
+		</header>
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<h2>Project Description</h2>
+		<p> I randomly created an HTTP 1.0 <span class="COSMOS">web proxy server</span>. 
+			This is a specialized server that acts as an intermediary 
+			between a web browser and a server that satisfies 
+			the browser’s requests by serving content. 
+			My proxy forwards the client(s) request to the web server, 
+			reads the server’s response, and then forwards that 
+			information to the client. To accomplish this, 
+			I had to learn a lot about HTTP 1.0 requests in order 
+			to write the correct request headers to the server, a
+			nd about the Sockets Interface in order to set up a 
+			port connection. At the end of the day, my proxy was 
+			able to display real web pages and cache from 
+			recently visited pages so that no server was 
+			required to serve that content again.</p>
+		
+		<p>My Proxy is a multithreaded HTTP web proxy that parses GET requests 
+			as per RFC 1945 and continues to retrieve and return 
+			the requested web object. Other requests, 
+			such as POST, are ignored. Proxy also 
+			utilizes a shared cache between threads, 
+			utilizing the pthread library functions to e
+			nsure proper synchronization (they already 
+			implement a reader-writer mutex solution), and 
+			stores requested web objects in this approximate 
+			LRU structure if the web object is <= some maximum size in bytes.</p>
+
+		<p>My Proxy essentially opens a ‘listenfd’, 
+			which opens a file descriptor and sets up the socket. 
+			We then wait for a connection request from the client, 
+			after which we open a new file descriptor ‘connfd’ 
+			which handles the data to and from the client. We then 
+			spawn a thread to deal with that client and that client only.</p>
+
+		<p> We assume that proper HTTP file protocols are followed, 
+			namely that every line is ended by a /r/n, and that the 
+			end of the request has an additional /r/n. We then 
+			read the GET request of the client and the headers, 
+			and forward our own request to the webhost specified 
+			by the client. We retrieve the web object the 
+			webhost writes back to us, and we forward it to the 
+			client, possibly caching it as well if it is small enough. 
+			That means for the next client to request it, assuming 
+			it has not been evicted, we can simply look into our cache 
+			instead of connecting to the web server.</p>
+
+		<p> My Proxy is robust, and will not terminate at all 
+			unless we encounter an error opening our listenfd, 
+			as then we cannot fulfill our function. Otherwise, 
+			if we encounter an error, like the inability to 
+			allocate space for another client or an error in our 
+			thread, we simply cease the function and disconnect from our client.</p>
+
+		<p>Proxy relies on the cache.h interface that I also wrote, 
+			which is an interface for my cache implementation. 
+			My cache is a doubly-linked list implementation of a 
+			cache, with cache blocks being simply nodes in the 
+			list. We search the cache based off of key/value pairs.</p>
+
+		<p>This cache is explicitly made for our proxy server in proxy.c, 
+			although theoretically it can work with any key:value 
+			pairing where the key and the value are both strings. 
+			The functions are all robust to crashing, 
+			the exception being my init function which will 
+			crash the proxy if it is unable to allocate the header.</p>
+
+		<p>Besides the above, proxy is a standalone application and can be run as 
+			the executable ./proxy with the command line 
+			argument of the port to listen on.</p>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+	</div>
+</body>
+
+</html>

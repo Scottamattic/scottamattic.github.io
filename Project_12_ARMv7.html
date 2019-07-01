@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: Armv7</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>ARMv7 RTOS Kernel</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<h2>Project Description</h2>
+		<p> For this project, I implemented a barebones ARMv7 real-time kernel
+			supporting threading and 
+			synchronization system calls. <br><br>
+			I used the UB test 
+			on thread creation to verify that my RMS 
+			scheduler could complete all tasks in time. <br>
+			I did not, in this project, implement the boot loader, 
+			rather I used system initialization code provided by 
+			the creator of the raspberry pi expansion boards 
+			I was developing on. I also linked my code with newlib, 
+			a C standard library implementation for embedded systems. <br>
+			Pretty much everything from an empty kernel_main() 
+			onwards was the scope of this work. <br>
+			COSMOS is a much larger kernel, and was done with knowledge gained here.
+		</p>
+
+		I started by installing custom exception and interrupt handlers 
+		into the interrupt vector table (in this project I only made use of timer IRQs to drive my context switcher 
+		and SWIs to implement my system calls). 
+		Afterwards, I set the appropriate state in ARM control registers 
+		and setup my thread control blocks before entering user mode as a newly initialized thread. 
+	
+		<ul>
+			<b>I implemented system calls to support the following:</b> <br>
+			<br>
+			<li> thread_init() – setup my thread control block structures and bookkeeping ( I supported up to 32 threads in my system, primarily so I could just keep track on runnable/running threads by bit masking a 32-bit integer). <br></li>
+			<li> thread_create() – spawn a new thread to run a function passed in as a parameter. Also takes in base priority and C/T values for my RMS scheduler. <br></li>
+			<li> mutex_init()/_lock()/_unlock() – kernel implementations of mutexes, implemented priority inheritance by keeping track of which threads held which locks (and all threads predeclared their lock usage at the start). <br></li>
+			<li> spin_wait() – A debugging system call to emulate a task taking a certain amount of time. <br></li>
+			<li> wait_until_next_period() – called by a thread to add itself to the waiting pool before being placed back in the runnable pool at the start of its next period. <br></li>
+		</ul>
+
+		I also implemented a basic context switcher 
+		that fired every IRQ timer interrupt. 
+		It gathered all thread state (even banked registers in different modes) 
+		and stored it on that threads stack, 
+		before selecting the next thread to run and updating the stack pointer.
+
+		I context swapped away from a thread that had not yielded control to the kernel 
+		via a wait_until_next_period() yet but had run past its C time allotment. 
+		I only revisited these after all other tasks had completed. 
+		If all tasks completed in their declared “worst case” time, then 
+		I had time to run my idle function (which just printed a series of Bob Dylan lyrics).
+
+		This project was far less extensive than the x86 COSMOS project, 
+		as I do not support virtual memory or other advanced features. 
+		The main point of this project was to support threads and implement 
+		real-time scheduling in the form of RMS and mutex priority inversion.
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>

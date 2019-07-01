@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: Interligua</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>Interligua: an optimizing C compiler for x86</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+
+				<li><a href="Project_10_WaveScalar.html">Wavescalar architectural simulator</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<figure>
+			<figcaption><h2>Project Description</h2></figcaption>
+			<p> <span class="COSMOS">Interligua</span> is an optimizing C compiler. I implemented it with a buddy of mine.
+				The compiler takes in a single source file (does not implement any preprocessing). <br>
+				The front end consists of a lexer, parser. <br>
+				At which point the code is converted to an AST <br>
+				After type checking is done, the codegen output is turned into a CFG and put into SSA form for optimization. <br>
+				Several types of optimization are done, after which the CFG is flattened, register-allocated, and output. <br>
+			</p>
+
+			<p class="aligncenter">
+			<img src="Project_9/Frontend.png" width=400 alt="Compiler front-end">
+			<figcaption><h3>Compiler frontend<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		<ul>
+			<b>The most interesting parts of the compiler are our analysis passes:</b> <br>
+			<br>
+			<li>Simplify CFG</li>
+			<li>Critical edge splitting</li>
+			<li>SSA (Construct dominator graph)</li>
+			<li>Generic dataflow pass (for liveness, PRE)</li>
+		</ul>
+
+		<ul>
+			<b>The optimization passes:</b> <br>
+			<br>
+			<li>BB reordering</li>
+			<li>Strength reduction</li>
+			<li>Register coalescing</li>
+			<li>SCCP</li>
+			<li>PRE</li>
+			<li>DCE</li>
+			<li>Function inlining</li>
+			<li>Tail-call optimizations</li>
+		</ul>
+
+		For specific, targeted benchmarks, Interligua outperforms GCC.
+		Specifically, GCC does not seem to implement my form of TCO.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/Timing.png" width=400 alt="Compiler timing">
+			<figcaption><h3>Optimization timing<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		<ul>
+			<b>And the extra modes:</b> <br>
+				<br>
+				<li>Wavescalar mode - compile to the Wavescalar dataflow architecture instead of x86</li>
+				<li>Theorem-proving mode - inspired by the Dafny language</li>
+		</ul>
+
+		Theorem-proving mode used dataflow analysis to accumulate known facts from the program.
+		Aided by programmer-inserted REQUIRES and LOOP_INVARIANT keywords. 
+		The system then tried to prove the programmer ENSURES keywords at each point in the program,
+		by passing all known facts at that point into a theorem prover.
+		<br>
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/Proof.png" width=400 alt="Compiler proof">
+			<figcaption><h3>Proving statements about code as part of typechecking<hr></h3></figcaption>
+			</hr>
+		</figure>
+		<br>
+
+		Wavescalar mode was done in an effort to research different hardware scheduling algorithms for dataflow architectures.
+		The compiler backend computed producer/consumer relationships with dataflow analysis and divided code into waves.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/Backend.png" width=400 alt="Backend">
+			<figcaption><h3>WaveScalar backend<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		The LARA algorithm we devised then routed producers that are live at the same time on different PEs, to get as close to the dataflow limit as possible.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/LARA.png" width=400 alt="LARA">
+			<figcaption><h3>LARA algorithm for PE scheduling<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		A simple C++ simluator for the WaveScalar architecture then executed the compiler output.
+		The compiler output was two files, one with the program, and the other with a map of PC to PE assignments.
+		Results were promising.
+
+		<figure>
+			<p class="aligncenter">
+			<img src="Project_9/WaveScalar.png" width=400 alt="LARA">
+			<figcaption><h3>WaveScalar simulation system architecture<hr></h3></figcaption>
+			</hr>
+		</figure>
+
+		Navigate to the WaveScalar page for more on LARA.
+		Reports on the other topics discussed can be found below:
+
+		<figure>
+			<h1>Reports</h1>
+			<h3>Report on x86 Compiler optimizations</h3>
+			<object data= "Project_9/OptimizingCompilerReport.pdf" 
+					width="800"
+					height="500">
+			</object>
+			<h3>Report on Theorem proving mode</h3>
+			<object data= "Project_9/TheoremProverReport.pdf" 
+					width="800"
+					height="500">
+			</object>
+		</figure>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>

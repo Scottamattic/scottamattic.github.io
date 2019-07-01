@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Scott Mionis Website :: Wormhole</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>Hypervisor extensions for COSMOS</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="Project_1_Cosmos.html">Back to COSMOS</a></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<h2>Project Description</h2>
+		<p><span class="COSMOS">WORMHOLE</span> is an expansion to the COSMOS kernel that adds basic ‘Paravirtualization’ 
+			or Hypervisor support to the OS. The goal was to be able to load another kernel 
+			as an executable, and provide hypervisor calls 
+			+ virtual hardware (x86 IDT and GDT, Physical Memory, Console, Keyboard), 
+			so that this paravirtualized kernel could then act as its own operating system, 
+			creating its own conception of processes and threads, etc…</p>
+
+		<ul>
+			<b>This addition to the COSMOS kernel consisted of:</b> <br>
+			<br>
+			<li>Installing new memory segments into the GDT to account 
+				for guest-kernels being loaded in at an offset address
+				(Host is already loaded in at address 0, 
+				so the guest kernels had to be offset by 16 MB) <br></li>
+			<li> Providing Kernel Control Structures that maintained a 
+				virtualized version of the IDT, Physical Memory, 
+				Interrupts, System Calls, and 
+				Keyboard buffers for each guest kernel <br></li>
+			<li> Program loader for loading and booting a guest kernel <br></li>
+			<li> System for detecting and delivering virtual interrupts to a guest kernel <br></li>
+			<li> Shadow page directories for maintaining a User/Kernel permissions abstraction even when both “Guest Kernel” and “Process within Guest Kernel” are technically running in user space <br></li>
+			<li> Virtual consoles – essentially this became a system for opening multiple tabs on the console and swapping between them. We could then support multiple kernels running multiple user-space applications by providing each kernel a virtual screen to output to <br></li>
+			<li> Program loader for loading and booting a guest kernel <br></li>
+			<li> Hypercalls – system calls for the guest kernel to request services from the hypervisor. <br></li>
+		</ul>
+
+		<ul>
+			<b> Hypercalls consist of:</b> <br>
+			<br>
+			<li> hv_disable_interrupts - Guest disable interrupts <br></li>
+			<li> hv_enable_interrupts - Guest enable interrupts <br></li>
+			<li> hv_setidt - Guest writes to the IDT<br></li>
+			<li> hv_setpd - Guest writes to CR3<br></li>
+			<li> hv_adjustpg - Guest modifications to the page table<br></li>
+			<li> hv_iret - Guest IRET<br></li>
+			<li> hv_print - Guest print to virtual console<br></li>
+			<li> hv_cons_set_term_color <br></li>
+			<li> hv_cons_set_cursor_pos <br></li>
+			<li> hv_cons_get_cursor_pos <br></li>
+			<li> hv_print_at <br></li>
+			<li> hv_exit - Guest is done<br></li>
+		</ul>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+	</div>
+</body>
+
+</html>

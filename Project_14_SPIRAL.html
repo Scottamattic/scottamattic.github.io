@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: SPIRAL</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Scott Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>SPIRAL Quantum Compiler</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="index.html">Home</a><br></li> &nbsp;
+			</b>
+			</ul>
+		</nav>
+	<main>
+		<figure>
+			<figcaption><h2>Project Description</h2></figcaption>
+
+			<figure>
+				<p class="aligncenter">
+					<img src="Project_14/SPIRAL.png" width=800 alt="SPIRAL.">
+					<figcaption><h3>SPIRAL Quantum Compiler<hr></h3></figcaption>
+					</hr>
+			</figure>
+
+			<p> As part of my master's thesis, I worked on the SPIRAL compiler system (https://www.spiral.net) <br>
+				<br>
+				The compiler takes in a DSL representation of an algorithm (like a DFT), <br>
+				and performs an optimizing search over possible decompositions of the algorithm into smaller chunks. <br>
+				<br>
+				Certain atomic operations may be more efficient on certain hardware, so the target hardware is directly taken into account,
+				when deciding on decomposition heuristics. <br>
+				<br>
+				Simplest example is applying cooley-tukey to break up an FFT into smaller matrix operations,
+				the sizes of which perform well on a given cache structure. <br>
+				<br>
+				I am not a quantum physicist, <br>
+				but the key observation is that quantum computers are essentially linear algebra machines. <br>
+				There is a lot of domain-specific terminology, <br>
+				that hides the fact that it is simply implementing a linear transform, with measurement being <br>
+				a projection onto a set of basis vectors. <br>
+				<br>
+				This work was published at <b>IEEE HPEC 2021</b>. <br>
+				Where I gave a talk on it. <br>
+				and the paper won an <b>Outstanding student paper award.</b> <br>
+				<ul>
+					<li>Preprint : https://spiral.ece.cmu.edu/pub-spiral/abstract.jsp?id=345</li>
+					<li>Published : https://ieeexplore.ieee.org/abstract/document/9622814</li>
+				</ul>
+				<br> <br>
+				This work was also published at the <b>SC20</b> supercomputing conference, <br>
+				where it won <b>Best research poster.</b>
+				<ul>
+					<li>http://spiral.net/doc/pdf/sc2020_poster.pdf</li>
+				</ul>
+				<br>
+				This work was also my thesis.
+				<ul>
+					<li>http://reports-archive.adm.cs.cmu.edu/anon/2021/abstracts/21-114.html</li>
+				</ul>
+			</p>
+		</figure>
+
+		<figure>
+			<h1>Reports</h1>
+			<h3>Thesis</h3>
+			<object data= "Project_14/CMU-CS-21-114.pdf" 
+					width="800"
+					height="500">
+			</object>
+		</figure>
+	</main>
+	<footer>
+		<small><i>Copyright &copy; 2023 Scott Mionis
+	</footer>
+</body>
+
+</html>
