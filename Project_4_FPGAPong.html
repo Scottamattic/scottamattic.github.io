@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Scott Mionis Website :: FPGA Pong</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Julia Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>FPGA Pong</h1>
+		</header>
+		<nav>
+			<ul>
+			<b>
+				<li><a href="Home_Page.html">Home</a></li> &nbsp;
+				
+				<li><a href="Project_1_Cosmos.html">Project 1: Cosmos, an x86 Operating System Model</a></li>&nbsp;
+				
+				<li><a href="Project_2_UserSpace.html">Project 2: User Space Thread Library </a></li> &nbsp;
+				
+				<li><a href="Project_3_PIDController.html">Project 3: PID Motor Controller with Loadable Kernel Modules </a><li> &nbsp;
+				
+				<li><a href="Project_4_FPGAPong.html">Project 4: FPGA Pong</a></li> &nbsp;
+				
+				<li><a href="Project_5_WebProxyServer.html">Project 5: Web Proxy Server</a></li> &nbsp;
+				
+				<li><a href="Project_6_GuitarAmplifierCircuit.html">Project 6: Guitar Tube Amplifier Circuit </a></li> &nbsp;
+				
+				<li><a href="Project_7_FirstRobotics.html">Project 7: FIRST Robotics</a></li> &nbsp;
+				
+				<li><a href="Project_8_FeedbackForm.html">Feedback Form</a></li>
+				
+			</b>
+			</ul>
+		</nav>
+	<figure>
+		<main>
+			<h2>FPGA Pong Project Description</h2>
+			<p>For a final project in my RTL FPGA design course, I created a <span class="Pong">‘Pong’ game</span> on an Altera Test board that communicated with any computer monitor via a VGA. I wrote, in SystemVerilog, hardware descriptions of a datapath (and controlling FSM) to run both the game and do VGA timing signals at the same time.</p>
+
+			<figcaption><h3>Project Photos<hr></h3></figcaption>
+			</hr>
+		
+			<div>
+				<p class="aligncenter">
+				<img src="https://scottmionisprojects.files.wordpress.com/2018/07/img_1381-e1566701623986.png",alt="This is the Pong output on the monitor via a VGA cable. The ball had an adjustable size and goals were highlighted on a score. The controls were implemented via physical switches and potentiometers on the Altera board."width=80%>
+				<p><i><figcaption>This is the Pong output on the monitor via a VGA cable. The ball had an adjustable size and goals were highlighted on a score. The controls were implemented via physical switches and potentiometers on the Altera board.</figcaption></i></p>
+			</div>
+			<div>
+				<p class="aligncenter">
+				<img src="https://scottmionisprojects.files.wordpress.com/2018/07/img_1382-e1566701735586.png",alt="This is the Altera board with score counts that were implemented via a seven segment display driver in the FPGA."width=80%>
+				<p><i><figcaption>This is the Altera board with score counts that were implemented via a seven segment display driver in the FPGA.</p></figcaption></i>
+			</div>
+
+			My pong game included: 
+			<ul>
+				<li>VGA compatibility (sorting out the timing sequence to drive screen refresh was a particular issue)</li>
+				<li>Proper edge detection for the ball, paddle, and screen edges</li>
+				<li>Goal detection</li>
+				<li>Seven Segment Display driver (also written in SystemVerilog) to display scores</li>
+				<li>Controls via switches on the Altera board</li>
+				<li>Adjustable ball size</li>
+			</ul>
+		
+			<p>This project was exciting because most of my other FPGA work is written in a behavioral style, so it was a nice break to design a retro game system in the RTL style. This means that the work was written in a more procedural manner, encouraging simulation and manipulation of data variables. </p>
+
+			<p>Due to CMU’s Academic Integrity policy, I cannot post specific SystemVerilog code online. Feel free to ask me about it however!</p>
+		
+		</main>
+		<footer>
+			<small><i>Copyright &copy; 2020 Scott Mionis
+			<a href="mailto:scottmionis@gmail.com"></a></i></small>
+		</footer>
+	</div>
+	</figure>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Scott Mionis Website :: User-space thread</title>
+	<LINK href="mystyle.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Julia Mionis">
+	<meta name="keywords" content="HTML">
+</head>
+
+<body>
+	<div id="wrapper">
+		<header>
+			<h1>User-space thread library</h1>
+		</header>
+
+		<nav>
+			<ul>
+			<b>
+				<li><a href="Home_Page.html">Home</a></li> &nbsp;
+				
+				<li><a href="Project_1_Cosmos.html">Project 1: Cosmos, an x86 Operating System Model</a></li>&nbsp;
+				
+				<li><a href="Project_2_UserSpace.html">Project 2: User Space Thread Library </a></li> &nbsp;
+				
+				<li><a href="Project_3_PIDController.html">Project 3: PID Motor Controller with Loadable Kernel Modules </a><li> &nbsp;
+				
+				<li><a href="Project_4_FPGAPong.html">Project 4: FPGA Pong</a></li> &nbsp;
+				<br>
+				<li><a href="Project_5_WebProxyServer.html">Project 5: Web Proxy Server</a></li> &nbsp;
+				<br>
+				<li><a href="Project_6_GuitarAmplifierCircuit.html">Project 6: Guitar Tube Amplifier Circuit </a></li> &nbsp;
+				<br>
+				<li><a href="Project_7_FirstRobotics.html">Project 7: FIRST Robotics</a></li> &nbsp;
+				<br>
+				<li><a href="Project_8_FeedbackForm.html">Feedback Form</a></li>
+				<br>
+			</b>
+			</ul>
+		</nav>
+	<figure>
+		<main>
+			<h2>User-Space Project Description</h2>
+			<p>This project consisted of developing a 1-to-1 <span class="User-space">User-space thread library</span> for extensively testing the functionality of the base COSMOS kernel (and the WORMHOLE hypervisor extension). In the below image, we can observe the basic process and composition of a thread library.</p>
+
+			<figcaption><h3>Project Photos<hr></h3></figcaption>
+			</hr>
+
+			<div>
+				<p class="aligncenter">
+				<img src="https://www.tutorialspoint.com/operating_system/images/many_to_many.jpg" alt="The above example was taken from tutorialspoint.com, a diagram showing multi-threading in an Operating System.">
+				<i><figcaption>The above example was taken from tutorialspoint.com, a diagram showing multi-threading in an Operating System.</figcaption></i>
+			</div>
+
+			<p> The above diagram is a basic example showing multi-threading in an Operating System. We can use this as the foundation for the information presented down below. First I created a system called "stub routines" for interacting with COSMOS through a functional interface. The tricky aspect of this foundation was COSMOS’s thread_fork system call, as it was up to the user to manage and create a new thread stack. COSMOS expected a certain layout for system call arguments.</p>
+			<ul>
+				I then implemented: <br>
+				<br>
+				<li>A software exception handler via the swexn() COSMOS call to serve a few purposes: 1) handle user thread crashes and 2) extend a thread’s stack space if it exceeds the minimum allotted stack size</li>
+				<li>User-space variants of Mutexes, Conditional Variables, Semaphores, and Reader/Writer Locks.</li>
+				<li>Thread management calls (init, create, exit, join, yield, and get_id)</li>
+				<br>
+				The thread management calls implemented are as follows: <br>
+				<br>
+					<li>thr_init() – initialized the thread library</li>
+					<li>thr_create( ) – This function created a new thread to run a given function with a  given argument. This function allocated a stack for the new user thread and then invoked the thread fork system call to create a new kernel thread.</li>
+					<li>thr_join() – This function cleans up the resources from a thread and returns the exit status</li>
+					<li>thr_exit() – This function exits the thread with a given exit status. It frees as much as it can but keeps the exit status around for another thread to collect via a join() call.</li>
+					<li>thr_getid() – Returns the thread ID of the currently running thread.</li>
+					<li>thr_yield() – Defers execution of the invoking thread in favor of a different thread.</li>
+			</ul>
+				We ran user applications with this threading library on both COSMOS and WORMHOLE to test system calls, scheduling, and kernel thread management. <br>
+				<br>
+		
+		</main>
+		<footer>
+			<small><i>Copyright &copy; 2020 Scott Mionis
+			<a href="mailto: scottmionis@gmail.com"></a></i></small>
+		</footer>
+	</div>
+	</figure>
+</body>
+
+</html>
